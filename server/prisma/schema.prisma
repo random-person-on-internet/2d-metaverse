@@ -18,6 +18,7 @@ model User {
   id         Int            @id @default(autoincrement())
   email      String         @unique
   password   String
+  role       Role           @default(USER)
   coins      Int            @default(0)
   items      ItemInstance[] // 1-to-many-relatinship
   UserInRoom UserInRoom[]
@@ -122,4 +123,9 @@ model UserInRoom {
   room     Room     @relation(fields: [roomId], references: [id])
 
   @@unique([userId, roomId])
+}
+
+enum Role {
+  USER
+  ADMIN
 }
