@@ -15,11 +15,12 @@ datasource db {
 }
 
 model User {
-  id       Int            @id @default(autoincrement())
-  email    String         @unique
-  password String
-  coins    Int            @default(0)
-  items    ItemInstance[] // 1-to-many-relatinship
+  id         Int            @id @default(autoincrement())
+  email      String         @unique
+  password   String
+  coins      Int            @default(0)
+  items      ItemInstance[] // 1-to-many-relatinship
+  UserInRoom UserInRoom[]
 }
 
 model ItemDefinition {
@@ -95,4 +96,30 @@ enum ItemRarity {
   RARE
   EPIC
   LEGENDARY
+}
+
+model Room {
+  id          Int          @id @default(autoincrement())
+  name        String
+  description String?
+  isPublic    Boolean      @default(true)
+  createdAt   DateTime     @default(now())
+  // relations
+  users       UserInRoom[]
+}
+
+model UserInRoom {
+  id       Int      @id @default(autoincrement())
+  userId   Int
+  roomId   Int
+  x        Int      @default(0)
+  y        Int      @default(0)
+  team     String?
+  isMuted  Boolean  @default(false)
+  joinedAt DateTime @default(now())
+  // relations
+  user     User     @relation(fields: [userId], references: [id])
+  room     Room     @relation(fields: [roomId], references: [id])
+
+  @@unique([userId, roomId])
 }
