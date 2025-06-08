@@ -3,13 +3,6 @@ import bcrypt from "bcryptjs";
 import { generateToken } from "../utils/generateToken";
 import prisma from "../db/prisma";
 
-// interface User {
-//   id: number;
-//   email: string;
-//   password: string;
-// }
-// const users: User[] = [];
-
 export const signup = async (req: Request, res: Response) => {
   const { email, password } = req.body;
 
@@ -25,7 +18,7 @@ export const signup = async (req: Request, res: Response) => {
     data: { email: email, password: hashed },
   });
 
-  res.json({ token: generateToken(user.id) });
+  res.json({ token: generateToken(user.id, user.role) });
 };
 
 export const login = async (req: Request, res: Response) => {
@@ -43,7 +36,7 @@ export const login = async (req: Request, res: Response) => {
     res.status(401).json({ message: "Invalid password" });
     return;
   }
-  res.json({ token: generateToken(user.id) });
+  res.json({ token: generateToken(user.id, user.role) });
 };
 
 export const protectedRoute = (req: Request, res: Response) => {
