@@ -4,7 +4,7 @@ import { generateToken } from "../utils/generateToken";
 import prisma from "../db/prisma";
 
 export const signup = async (req: Request, res: Response) => {
-  const { email, password } = req.body;
+  const { email, password, username, avatar } = req.body;
 
   const existingUser = await prisma.user.findUnique({ where: { email } });
 
@@ -15,7 +15,13 @@ export const signup = async (req: Request, res: Response) => {
 
   const hashed = await bcrypt.hash(password, 10);
   const user = await prisma.user.create({
-    data: { email: email, password: hashed },
+    data: {
+      email: email,
+      password: hashed,
+      username: username,
+      role: "USER",
+      avatar: avatar || undefined,
+    },
   });
 
   res.json({ token: generateToken(user.id, user.role) });

@@ -7,8 +7,21 @@ CREATE TYPE "EffectType" AS ENUM ('SPEED', 'JUMP', 'HEAL', 'DAMAGE', 'DEFENSE', 
 -- CreateEnum
 CREATE TYPE "ItemRarity" AS ENUM ('COMMON', 'RARE', 'EPIC', 'LEGENDARY');
 
--- AlterTable
-ALTER TABLE "User" ADD COLUMN     "coins" INTEGER NOT NULL DEFAULT 0;
+-- CreateEnum
+CREATE TYPE "Role" AS ENUM ('USER', 'ADMIN');
+
+-- CreateTable
+CREATE TABLE "User" (
+    "id" SERIAL NOT NULL,
+    "email" TEXT NOT NULL,
+    "password" TEXT NOT NULL,
+    "username" TEXT NOT NULL,
+    "avatar" TEXT,
+    "role" "Role" NOT NULL DEFAULT 'USER',
+    "coins" INTEGER NOT NULL DEFAULT 0,
+
+    CONSTRAINT "User_pkey" PRIMARY KEY ("id")
+);
 
 -- CreateTable
 CREATE TABLE "ItemDefinition" (
@@ -79,6 +92,12 @@ CREATE TABLE "UserInRoom" (
 
     CONSTRAINT "UserInRoom_pkey" PRIMARY KEY ("id")
 );
+
+-- CreateIndex
+CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "User_username_key" ON "User"("username");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "UserInRoom_userId_roomId_key" ON "UserInRoom"("userId", "roomId");
