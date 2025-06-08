@@ -15,7 +15,84 @@ datasource db {
 }
 
 model User {
-  id       Int     @id @default(autoincrement())
-  email    String  @unique
+  id       Int            @id @default(autoincrement())
+  email    String         @unique
   password String
+  coins    Int            @default(0)
+  items    ItemInstance[] // 1-to-many-relatinship
+}
+
+model ItemDefinition {
+  id            Int          @id @default(autoincrement())
+  name          String
+  description   String?
+  category      ItemCategory
+  // 
+  price         Int
+  imageUrl      String?
+  // 
+  canBePlaced   Boolean      @default(false)
+  canBeConsumed Boolean      @default(false)
+  canBeSatOn    Boolean      @default(false)
+
+  isSolid   Boolean?
+  rarity    ItemRarity     @default(COMMON)
+  // 
+  createdAt DateTime       @default(now())
+  items     ItemInstance[]
+  effects   Effect[]
+}
+
+enum ItemCategory {
+  FURNITURE // chairs, tables, sofas
+  DECORATION // plants, lights, art
+  FOOD // consumables
+  BOOSTER // speed boost, jump boost, etc
+  STRUCTURE // walls, floors, doors
+  PORTAL // game teleporters
+  INTERACTIVE // crafting benches, storage boxes etc
+}
+
+model ItemInstance {
+  id           Int            @id @default(autoincrement())
+  user         User           @relation(fields: [userId], references: [id])
+  userId       Int
+  // 
+  definition   ItemDefinition @relation(fields: [definitionId], references: [id])
+  definitionId Int
+  // 
+  x            Int?
+  y            Int?
+  stackCount   Int            @default(1)
+  isEquipped   Boolean?       @default(false)
+  isPlaced     Boolean?       @default(false)
+  // 
+  createdAt    DateTime       @default(now())
+  ownedAt      DateTime       @default(now())
+}
+
+model Effect {
+  id       Int            @id @default(autoincrement())
+  type     EffectType
+  amount   Int
+  duration Int? // seconds
+  // 
+  item     ItemDefinition @relation(fields: [itemId], references: [id])
+  itemId   Int
+}
+
+enum EffectType {
+  SPEED
+  JUMP
+  HEAL
+  DAMAGE
+  DEFENSE
+  INVISIBILITY
+}
+
+enum ItemRarity {
+  COMMON
+  RARE
+  EPIC
+  LEGENDARY
 }
