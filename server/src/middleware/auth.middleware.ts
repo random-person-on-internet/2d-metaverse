@@ -2,7 +2,10 @@ import { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
 
 interface AuthRequest extends Request {
-  userId?: number;
+  user?: {
+    userId: number;
+    role: string;
+  };
 }
 
 export const verifyToken = (
@@ -24,8 +27,10 @@ export const verifyToken = (
       userId: number;
       role: string;
     };
-    req.body.userId = decode.userId;
-    req.body.role = decode.role;
+    req.user = {
+      userId: decode.userId,
+      role: decode.role,
+    };
     next();
   } catch (e) {
     res.status(403).json({ message: "Invalid token" });
