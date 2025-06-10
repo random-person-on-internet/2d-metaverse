@@ -105,6 +105,10 @@ model Room {
   id          Int          @id @default(autoincrement())
   name        String
   description String?
+  x           Int // coordinates for left top corner
+  y           Int
+  xlen        Int
+  ylen        Int
   isPublic    Boolean      @default(true)
   createdAt   DateTime     @default(now())
   // relations
