@@ -2,6 +2,19 @@ import bcrypt from "bcryptjs";
 import prisma from "../db/prisma";
 import { Request, Response } from "express";
 
+export const getUserData = async (req: Request, res: Response) => {
+  const userId = req.params.id;
+
+  try {
+    const userData = await prisma.user.findUnique({
+      where: { id: Number(userId) },
+    });
+    res.json(userData);
+  } catch (e) {
+    res.status(400).json({ error: "Failed to get user data", details: e });
+  }
+};
+
 export const changePassword = async (req: Request, res: Response) => {
   const { password } = req.body;
   const hashed = await bcrypt.hash(password, 10);
