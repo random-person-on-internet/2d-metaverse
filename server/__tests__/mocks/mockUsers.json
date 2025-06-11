@@ -1,0 +1,14 @@
+[
+  {
+    "email": "vedlakkad05@gmail.com",
+    "password": "passwd",
+    "username": "ved",
+    "avatar": null
+  },
+  {
+    "email": "one@one.com",
+    "password": "passwd1",
+    "username": "u1",
+    "avatar": "https://example.com/avatar1.png"
+  }
+]
