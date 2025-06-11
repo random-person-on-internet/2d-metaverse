@@ -1,9 +1,10 @@
 import { Request, Response } from "express";
 import prisma from "../db/prisma";
+import * as RoomService from "../services/room.service";
 
 export const createRoom = async (req: Request, res: Response) => {
   try {
-    const room = await prisma.room.create({ data: req.body });
+    const room = await RoomService.createRoom({ data: req.body });
     res.status(201).json(room);
   } catch (e) {
     res.status(400).json({ error: "Failed to create room", details: e });
@@ -12,7 +13,7 @@ export const createRoom = async (req: Request, res: Response) => {
 
 export const getAllRooms = async (req: Request, res: Response) => {
   try {
-    const roomData = await prisma.room.findMany();
+    const roomData = await RoomService.getAllRooms();
     res.status(200).json(roomData);
     return;
   } catch (e) {
@@ -21,11 +22,9 @@ export const getAllRooms = async (req: Request, res: Response) => {
 };
 
 export const getRoomById = async (req: Request, res: Response) => {
-  const roomId = req.params.id;
+  const roomId = Number(req.params.id);
   try {
-    const roomData = await prisma.room.findUnique({
-      where: { id: Number(roomId) },
-    });
+    const roomData = await RoomService.getRoomById(roomId);
     res.status(200).json(roomData);
   } catch (e) {
     res
@@ -35,12 +34,10 @@ export const getRoomById = async (req: Request, res: Response) => {
 };
 
 export const updateRoom = async (req: Request, res: Response) => {
-  const roomId = req.params.id;
+  const roomId = Number(req.params.id);
+  const data = req.body;
   try {
-    const updated = await prisma.room.update({
-      where: { id: Number(roomId) },
-      data: req.body,
-    });
+    const updated = await RoomService.updateRoom(roomId, data);
     res.status(200).json(updated);
   } catch (e) {
     res
@@ -50,9 +47,9 @@ export const updateRoom = async (req: Request, res: Response) => {
 };
 
 export const deleteRoom = async (req: Request, res: Response) => {
-  const roomId = req.params.id;
+  const roomId = Number(req.params.id);
   try {
-    await prisma.room.delete({ where: { id: Number(roomId) } });
+    await RoomService.deleteRoom(roomId);
     res.status(204).send();
   } catch (e) {
     res
@@ -66,15 +63,7 @@ export const joinRoom = async (req: Request, res: Response) => {
   const roomId = Number(req.params.id);
 
   try {
-    const entry = await prisma.userInRoom.create({
-      data: {
-        userId: userId,
-        roomId: roomId,
-        x: x,
-        y: y,
-        team: team,
-      },
-    });
+    const entry = await RoomService.joinRoom(userId, roomId, x, y, team);
 
     res.status(201).json(entry);
   } catch (e) {
@@ -87,11 +76,9 @@ export const leaveRoom = async (req: Request, res: Response) => {
   const roomId = Number(req.params.id);
 
   try {
-    await prisma.userInRoom.delete({
-      where: {
-        userId_roomId: { userId, roomId },
-      },
-    });
+    await RoomService.leaveRoom(userId, roomId);
+
+    res.status(200).send();
   } catch (e) {
     res.status(400).json({ error: "Failed to leave room", details: e });
   }
@@ -101,10 +88,8 @@ export const getUsersInRoom = async (req: Request, res: Response) => {
   const roomId = Number(req.params.id);
 
   try {
-    const users = await prisma.userInRoom.findMany({
-      where: { roomId: roomId },
-      include: { user: true },
-    });
+    const users = await RoomService.getUsersInRoom(roomId);
+
     res.status(200).json(users);
   } catch (e) {
     res.status(400).json({ error: "Failed to get users", details: e });
@@ -117,10 +102,9 @@ export const updateUserInRoom = async (req: Request, res: Response) => {
   const data = req.body;
 
   try {
-    const updated = await prisma.userInRoom.update({
-      where: { userId_roomId: { userId, roomId } },
-      data: data,
-    });
+    const updated = await RoomService.updateUserInRoom(userId, roomId, data);
+
+    res.status(200).json(updated);
   } catch (e) {
     res.status(400).json({ error: "Failed to update user state", details: e });
   }
