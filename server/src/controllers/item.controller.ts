@@ -23,7 +23,7 @@ export const getAllItems = async (req: Request, res: Response) => {
 export const getItemById = async (req: Request, res: Response) => {
   const { id } = req.params;
   try {
-    const item = ItemService.getItemById(Number(id));
+    const item = await ItemService.getItemById(Number(id));
     if (!item) {
       res.status(404).json({ error: "Item not found" });
       return;
@@ -37,7 +37,7 @@ export const getItemById = async (req: Request, res: Response) => {
 export const updateItem = async (req: Request, res: Response) => {
   const { id } = req.params;
   try {
-    const updated = ItemService.updateItem(Number(id), req.body);
+    const updated = await ItemService.updateItem(Number(id), req.body);
     res.status(200).json(updated);
   } catch (e) {
     res.status(400).json({ error: "Failed to update item", details: e });
