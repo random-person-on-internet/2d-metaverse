@@ -6,6 +6,10 @@ import {
   getAllRooms,
   getRoomById,
   updateRoom,
+  getUsersInRoom,
+  joinRoom,
+  leaveRoom,
+  updateUserInRoom,
 } from "../controllers/room.controller";
 
 const router = Router();
@@ -16,5 +20,9 @@ router.get("/", getAllRooms);
 router.get("/:id", getRoomById);
 router.patch("/:id", updateRoom);
 router.delete("/:id", deleteRoom);
+router.post("/:id/join", joinRoom);
+router.delete("/:id/leave", leaveRoom);
+router.get("/:id/users", getUsersInRoom);
+router.patch("/:id/user", updateUserInRoom);
 
 export default router;
