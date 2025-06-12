@@ -3,7 +3,7 @@ dotenv.config();
 import http from "http";
 import app from "./app";
 import { Server } from "socket.io";
-import { initSocketServer } from "./sockets";
+import { registerSocketHandlers } from "./ws";
 
 const server = http.createServer(app);
 
@@ -14,7 +14,7 @@ const io = new Server(server, {
   },
 });
 
-initSocketServer(io);
+registerSocketHandlers(io);
 
 const PORT = process.env.PORT || 5000;
 server.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
