@@ -35,7 +35,6 @@ export const playerSocketHandler = (io: Server, socket: Socket) => {
     if (player) {
       player.x = payload.x;
       player.y = payload.y;
-      connectedPlayers.set(socket.id, player);
 
       socket.broadcast.emit("player:moved", {
         ...payload,
