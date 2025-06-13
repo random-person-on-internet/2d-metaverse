@@ -6,6 +6,7 @@ import {
   handleRoomDisconnect,
   roomSocketHandler,
 } from "./handlers/room.handler";
+import { ticTacToeSocketHandler } from "./handlers/games/tictactoe.handler";
 
 export const registerSocketHandlers = (io: Server) => {
   io.on("connection", (socket) => {
@@ -14,6 +15,9 @@ export const registerSocketHandlers = (io: Server) => {
     playerSocketHandler(io, socket);
     itemSocketHandler(io, socket);
     roomSocketHandler(io, socket);
+
+    // game handlers
+    ticTacToeSocketHandler(io, socket);
 
     socket.on("disconnect", () => {
       const player = connectedPlayers.get(socket.id);

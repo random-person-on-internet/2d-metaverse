@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Test Tic Tac Toe</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.2/socket.io.min.js"></script>
+  </head>
+  <body>
+    <h1>Testing Tic Tac Toe</h1>
+    <script>
+      const socket = io("http://localhost:5000");
+      const userId = Math.floor(Math.random() * 10000);
+      const roomId = "tictactoe-room";
+
+      console.log("User ID: ", userId);
+
+      socket.on("connect", () => {
+        console.log("Connected as", socket.id);
+
+        // join
+        socket.emit("room:join", { roomId, userId });
+        console.log("Joined room:", roomId);
+
+        // trigger game start manually
+        window.startGame = (opponentId) => {
+          socket.emit("tictactoe:start", {
+            roomId,
+            playerX: userId,
+            playerO: opponentId,
+          });
+        };
+
+        // move
+        window.makeMove = (x, y) => {
+          socket.emit("tictactoe:move", { roomId, userId, x, y });
+        };
+
+        // listen for game events
+        socket.on("tictactoe:started", (data) => {
+          console.log("Game started: ", data);
+        });
+        socket.on("tictactoe:invalid-move", (data) => {
+          console.log("Invalid made: ", data);
+        });
+        socket.on("tictactoe:move-made", (data) => {
+          console.log("Move made: ", data);
+        });
+        socket.on("tictactoe:game-over", (data) => {
+          console.log("Game Over: ", data);
+        });
+      });
+    </script>
+  </body>
+</html>
