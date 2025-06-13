@@ -40,7 +40,7 @@ export const makeTicTacToeMove = (
   const symbol = room.players[0] === userId ? "X" : "O";
   room.board[x][y] = symbol;
 
-  const winner = checkWinner(room.board);
+  const winner = checkWinner(room.board, room.players);
   if (winner !== null) {
     ticTacToeRooms.delete(roomId);
     return { valid: true, winner, board: room.board };
@@ -50,7 +50,10 @@ export const makeTicTacToeMove = (
   return { valid: true, board: room.board };
 };
 
-export const checkWinner = (board: string[][]): number | "draw" | null => {
+export const checkWinner = (
+  board: string[][],
+  players: [number, number]
+): number | "draw" | null => {
   const lines = [
     // rows
     [board[0][0], board[0][1], board[0][2]],
@@ -67,7 +70,7 @@ export const checkWinner = (board: string[][]): number | "draw" | null => {
 
   for (const line of lines) {
     if (line[0] !== "" && line[0] === line[1] && line[1] === line[2]) {
-      return line[0] === "X" ? 1 : 2;
+      return line[0] === "X" ? players[0] : players[1];
     }
   }
 
