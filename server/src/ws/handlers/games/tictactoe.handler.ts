@@ -39,6 +39,7 @@ export const ticTacToeSocketHandler = (io: Server, socket: Socket) => {
         x: x,
         y: y,
       });
+      return;
     }
 
     io.to(roomId).emit("tictactoe:move-made", {
@@ -54,6 +55,7 @@ export const ticTacToeSocketHandler = (io: Server, socket: Socket) => {
         roomId: roomId,
         winner: result.winner,
       });
+      return;
     }
   });
 };
