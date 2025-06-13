@@ -23,9 +23,14 @@
     "@types/bcryptjs": "^2.4.6",
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.3",
+    "@types/jest": "^29.5.14",
     "@types/jsonwebtoken": "^9.0.9",
     "@types/node": "^22.15.30",
+    "@types/socket.io-client": "^1.4.36",
+    "jest": "^30.0.0",
     "nodemon": "^3.1.10",
+    "socket.io-client": "^4.8.1",
+    "ts-jest": "^29.4.0",
     "ts-node": "^10.9.2",
     "typescript": "^5.8.3"
   }
