@@ -1,6 +1,6 @@
 export interface TicTacToeRoom {
   board: string[][];
-  players: number[];
+  players: [number, number];
   turn: number;
 }
 
