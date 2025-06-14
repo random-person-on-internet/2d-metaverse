@@ -8,13 +8,14 @@
         "strict": true,
         "skipLibCheck": true,
         "forceConsistentCasingInFileNames": true,
-        "typeRoots": [
-            "./src/types",
-            "./node_modules/@types"
+        "types": [
+            "node",
+            "jest"
         ]
     },
     "include": [
         "src",
-        "prisma"
+        "prisma",
+        "__tests__"
     ]
 }
