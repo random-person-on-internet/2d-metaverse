@@ -21,7 +21,7 @@ router.get("/:id", getRoomById);
 router.patch("/:id", updateRoom);
 router.delete("/:id", deleteRoom);
 router.post("/:id/join", joinRoom);
-router.delete("/:id/leave", leaveRoom);
+router.post("/:id/leave", leaveRoom);
 router.get("/:id/users", getUsersInRoom);
 router.patch("/:id/user", updateUserInRoom);
 
