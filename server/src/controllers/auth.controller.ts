@@ -11,8 +11,8 @@ export const signup = async (req: Request, res: Response) => {
       avatar
     );
     res.status(200).json({ Token: token });
-  } catch (e) {
-    res.status(400).json({ message: "Signup failed", details: e });
+  } catch (e: any) {
+    res.status(400).json({ message: "Signup failed", details: e.message });
   }
 };
 
@@ -21,8 +21,8 @@ export const login = async (req: Request, res: Response) => {
   try {
     const token = await AuthService.loginUser(email, password);
     res.status(200).json({ Token: token });
-  } catch (e) {
-    res.status(401).json({ message: "Signin failed", details: e });
+  } catch (e: any) {
+    res.status(401).json({ message: "Signin failed", details: e.message });
   }
 };
 

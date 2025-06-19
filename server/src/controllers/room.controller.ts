@@ -6,8 +6,10 @@ export const createRoom = async (req: Request, res: Response) => {
   try {
     const room = await RoomService.createRoom({ data: req.body });
     res.status(201).json(room);
-  } catch (e) {
-    res.status(400).json({ error: "Failed to create room", details: e });
+  } catch (e: any) {
+    res
+      .status(400)
+      .json({ error: "Failed to create room", details: e.message });
   }
 };
 
@@ -16,8 +18,10 @@ export const getAllRooms = async (req: Request, res: Response) => {
     const roomData = await RoomService.getAllRooms();
     res.status(200).json(roomData);
     return;
-  } catch (e) {
-    res.status(400).json({ error: "Failed to get all rooms", details: e });
+  } catch (e: any) {
+    res
+      .status(400)
+      .json({ error: "Failed to get all rooms", details: e.message });
   }
 };
 
@@ -26,10 +30,11 @@ export const getRoomById = async (req: Request, res: Response) => {
   try {
     const roomData = await RoomService.getRoomById(roomId);
     res.status(200).json(roomData);
-  } catch (e) {
-    res
-      .status(400)
-      .json({ error: `Failed to get room with ID ${roomId}`, details: e });
+  } catch (e: any) {
+    res.status(400).json({
+      error: `Failed to get room with ID ${roomId}`,
+      details: e.message,
+    });
   }
 };
 
@@ -39,10 +44,11 @@ export const updateRoom = async (req: Request, res: Response) => {
   try {
     const updated = await RoomService.updateRoom(roomId, data);
     res.status(200).json(updated);
-  } catch (e) {
-    res
-      .status(400)
-      .json({ error: `Failed to update room with ID ${roomId}`, details: e });
+  } catch (e: any) {
+    res.status(400).json({
+      error: `Failed to update room with ID ${roomId}`,
+      details: e.message,
+    });
   }
 };
 
@@ -51,10 +57,10 @@ export const deleteRoom = async (req: Request, res: Response) => {
   try {
     await RoomService.deleteRoom(roomId);
     res.status(204).send();
-  } catch (e) {
+  } catch (e: any) {
     res
       .status(400)
-      .json({ error: `Failed to room with ID ${roomId}`, details: e });
+      .json({ error: `Failed to room with ID ${roomId}`, details: e.message });
   }
 };
 
@@ -66,8 +72,8 @@ export const joinRoom = async (req: Request, res: Response) => {
     const entry = await RoomService.joinRoom(userId, roomId, x, y, team);
 
     res.status(201).json(entry);
-  } catch (e) {
-    res.status(400).json({ error: "Failed to join room", details: e });
+  } catch (e: any) {
+    res.status(400).json({ error: "Failed to join room", details: e.message });
   }
 };
 
@@ -79,8 +85,8 @@ export const leaveRoom = async (req: Request, res: Response) => {
     await RoomService.leaveRoom(userId, roomId);
 
     res.status(200).send();
-  } catch (e) {
-    res.status(400).json({ error: "Failed to leave room", details: e });
+  } catch (e: any) {
+    res.status(400).json({ error: "Failed to leave room", details: e.message });
   }
 };
 
@@ -91,8 +97,8 @@ export const getUsersInRoom = async (req: Request, res: Response) => {
     const users = await RoomService.getUsersInRoom(roomId);
 
     res.status(200).json(users);
-  } catch (e) {
-    res.status(400).json({ error: "Failed to get users", details: e });
+  } catch (e: any) {
+    res.status(400).json({ error: "Failed to get users", details: e.message });
   }
 };
 
@@ -105,7 +111,9 @@ export const updateUserInRoom = async (req: Request, res: Response) => {
     const updated = await RoomService.updateUserInRoom(userId, roomId, data);
 
     res.status(200).json(updated);
-  } catch (e) {
-    res.status(400).json({ error: "Failed to update user state", details: e });
+  } catch (e: any) {
+    res
+      .status(400)
+      .json({ error: "Failed to update user state", details: e.message });
   }
 };

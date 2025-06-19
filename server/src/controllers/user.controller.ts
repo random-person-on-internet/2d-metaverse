@@ -6,8 +6,10 @@ export const getUserData = async (req: Request, res: Response) => {
   try {
     const userData = await UserService.getUserData(Number(req.params.id));
     res.status(200).json(userData);
-  } catch (e) {
-    res.status(400).json({ error: "Failed to get user data", details: e });
+  } catch (e: any) {
+    res
+      .status(400)
+      .json({ error: "Failed to get user data", details: e.message });
   }
 };
 
@@ -19,8 +21,10 @@ export const changePassword = async (req: Request, res: Response) => {
       password
     );
     res.status(200).json(updated);
-  } catch (e) {
-    res.status(400).json({ error: "Failed to change password", details: e });
+  } catch (e: any) {
+    res
+      .status(400)
+      .json({ error: "Failed to change password", details: e.message });
   }
 };
 
@@ -32,8 +36,10 @@ export const changeUsername = async (req: Request, res: Response) => {
       username
     );
     res.status(200).json(updated);
-  } catch (e) {
-    res.status(400).json({ error: "Failed to change username", details: e });
+  } catch (e: any) {
+    res
+      .status(400)
+      .json({ error: "Failed to change username", details: e.message });
   }
 };
 
@@ -45,8 +51,10 @@ export const changeAvatar = async (req: Request, res: Response) => {
       avatar
     );
     res.status(200).json(updated);
-  } catch (e) {
-    res.status(400).json({ error: "Failed to change avatar", details: e });
+  } catch (e: any) {
+    res
+      .status(400)
+      .json({ error: "Failed to change avatar", details: e.message });
   }
 };
 
@@ -55,8 +63,10 @@ export const changeCoins = async (req: Request, res: Response) => {
   try {
     const updated = await UserService.changeCoins(Number(req.params.id), coins);
     res.status(200).json(updated);
-  } catch (e) {
-    res.status(400).json({ error: "Failed to update coins", details: e });
+  } catch (e: any) {
+    res
+      .status(400)
+      .json({ error: "Failed to update coins", details: e.message });
   }
 };
 
@@ -67,8 +77,10 @@ export const addItemToUser = async (req: Request, res: Response) => {
       req.body
     );
     res.status(201).json(item);
-  } catch (e) {
-    res.status(400).json({ error: "Failed to add item to user", details: e });
+  } catch (e: any) {
+    res
+      .status(400)
+      .json({ error: "Failed to add item to user", details: e.message });
   }
 };
 
@@ -77,8 +89,10 @@ export const updateUserItem = async (req: Request, res: Response) => {
   try {
     const updated = await UserService.updateUserItem(Number(itemId), req.body);
     res.status(200).json(updated);
-  } catch (e) {
-    res.status(400).json({ error: "Failed to update user item", details: e });
+  } catch (e: any) {
+    res
+      .status(400)
+      .json({ error: "Failed to update user item", details: e.message });
   }
 };
 
@@ -87,8 +101,10 @@ export const deleteUserItem = async (req: Request, res: Response) => {
   try {
     await UserService.deleteUserItem(Number(itemId));
     res.status(204).send();
-  } catch (e) {
-    res.status(400).json({ error: "Failed to delete user item", details: e });
+  } catch (e: any) {
+    res
+      .status(400)
+      .json({ error: "Failed to delete user item", details: e.message });
   }
 };
 
@@ -96,8 +112,10 @@ export const deleteUser = async (req: Request, res: Response) => {
   try {
     await UserService.deleteUser(Number(req.params.id));
     res.status(204).send();
-  } catch (e) {
-    res.status(400).json({ error: "Failed to delete user", details: e });
+  } catch (e: any) {
+    res
+      .status(400)
+      .json({ error: "Failed to delete user", details: e.message });
   }
 };
 
@@ -123,7 +141,7 @@ export const getMe = async (req: Request, res: Response) => {
       coins: user.coins,
       items: user.items,
     });
-  } catch (e) {
-    res.status(500).json({ error: "Failed to fetch user", details: e });
+  } catch (e: any) {
+    res.status(500).json({ error: "Failed to fetch user", details: e.message });
   }
 };
