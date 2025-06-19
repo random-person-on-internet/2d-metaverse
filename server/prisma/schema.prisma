@@ -22,6 +22,7 @@ model User {
   avatar     String?
   role       Role           @default(USER)
   coins      Int            @default(0)
+  isDeleted  Boolean        @default(false)
   items      ItemInstance[] // 1-to-many-relatinship
   UserInRoom UserInRoom[]
 }
@@ -45,6 +46,8 @@ model ItemDefinition {
   createdAt DateTime       @default(now())
   items     ItemInstance[]
   effects   Effect[]
+  // 
+  isDeleted Boolean        @default(false)
 }
 
 enum ItemCategory {
@@ -76,13 +79,15 @@ model ItemInstance {
 }
 
 model Effect {
-  id       Int            @id @default(autoincrement())
-  type     EffectType
-  amount   Int
-  duration Int? // seconds
+  id        Int            @id @default(autoincrement())
+  type      EffectType
+  amount    Int
+  duration  Int? // seconds
   // 
-  item     ItemDefinition @relation(fields: [itemId], references: [id])
-  itemId   Int
+  item      ItemDefinition @relation(fields: [itemId], references: [id])
+  itemId    Int
+  // 
+  isDeleted Boolean        @default(false)
 }
 
 enum EffectType {
@@ -111,6 +116,7 @@ model Room {
   ylen        Int
   isPublic    Boolean      @default(true)
   createdAt   DateTime     @default(now())
+  isDeleted   Boolean      @default(false)
   // relations
   users       UserInRoom[]
 }
