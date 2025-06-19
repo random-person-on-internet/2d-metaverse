@@ -11,11 +11,17 @@
         "types": [
             "node",
             "jest"
+        ],
+        "typeRoots": [
+            "src/types",
+            "./node_modules/@types"
         ]
     },
     "include": [
         "src",
         "prisma",
-        "__tests__"
+        "src/types",
+        "__tests__",
+        "src/types"
     ]
 }

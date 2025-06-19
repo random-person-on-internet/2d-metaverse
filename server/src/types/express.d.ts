@@ -1,4 +1,4 @@
-import { UserRole } from "../../db/prisma";
+import { UserRole } from "../db/prisma";
 
 declare global {
   namespace Express {

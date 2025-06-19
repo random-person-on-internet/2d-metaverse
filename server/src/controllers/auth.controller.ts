@@ -28,5 +28,5 @@ export const login = async (req: Request, res: Response) => {
 
 export const protectedRoute = (req: Request, res: Response) => {
   res.json({ message: `Hello User ${req.user?.userId}` });
-  console.log(req.user);
+  // console.log(req.user);
 };
