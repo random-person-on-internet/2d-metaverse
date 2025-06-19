@@ -67,3 +67,10 @@ export const deleteUser = async (id: number) => {
     data: { isDeleted: true },
   });
 };
+
+export const getMe = async (id: number) => {
+  return await prisma.user.findUnique({
+    where: { id: id },
+    include: { items: true },
+  });
+};

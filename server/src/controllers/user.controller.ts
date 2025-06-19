@@ -100,3 +100,30 @@ export const deleteUser = async (req: Request, res: Response) => {
     res.status(400).json({ error: "Failed to delete user", details: e });
   }
 };
+
+export const getMe = async (req: Request, res: Response) => {
+  try {
+    const userId = req.user?.userId;
+    if (!userId) {
+      res.status(401).json({ message: "Unauthorized" });
+      return;
+    }
+
+    const user = await UserService.getMe(Number(userId));
+
+    if (!user) {
+      res.status(404).json({ message: "User not found" });
+      return;
+    }
+
+    res.status(200).json({
+      id: user.id,
+      username: user.username,
+      avatar: user.avatar,
+      coins: user.coins,
+      items: user.items,
+    });
+  } catch (e) {
+    res.status(500).json({ error: "Failed to fetch user", details: e });
+  }
+};

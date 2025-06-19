@@ -11,11 +11,13 @@ import {
   deleteUserItem,
   updateUserItem,
   getUserData,
+  getMe,
 } from "../controllers/user.controller";
 
 const router = Router();
 router.use(verifyToken);
 
+router.get("/me", ensureSelf, getMe);
 router.get("/:id", ensureSelf, getUserData);
 router.patch("/:id/password", ensureSelf, changePassword);
 router.patch("/:id/username", ensureSelf, changeUsername);
