@@ -19,7 +19,10 @@ export const updateRoom = async (id: number, data: any) => {
 };
 
 export const deleteRoom = async (id: number) => {
-  return await prisma.room.delete({ where: { id: id } });
+  return await prisma.room.update({
+    where: { id: id },
+    data: { isDeleted: true },
+  });
 };
 
 // users in room

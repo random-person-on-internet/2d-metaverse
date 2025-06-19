@@ -20,5 +20,8 @@ export const updateItem = async (id: number, data: any) => {
 };
 
 export const deleteItem = async (id: number) => {
-  return await prisma.itemDefinition.delete({ where: { id: Number(id) } });
+  return await prisma.itemDefinition.update({
+    where: { id: Number(id) },
+    data: { isDeleted: true },
+  });
 };

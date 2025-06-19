@@ -62,5 +62,8 @@ export const deleteUserItem = async (itemId: number) => {
 };
 
 export const deleteUser = async (id: number) => {
-  return await prisma.user.delete({ where: { id: id } });
+  return await prisma.user.update({
+    where: { id: id },
+    data: { isDeleted: true },
+  });
 };
