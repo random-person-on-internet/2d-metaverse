@@ -7,7 +7,9 @@ export const createRoom = async (data: any) => {
 };
 
 export const getAllRooms = async () => {
-  return await prisma.room.findMany();
+  return await prisma.room.findMany({
+    where: { isDeleted: false },
+  });
 };
 
 export const getRoomById = async (id: number) => {

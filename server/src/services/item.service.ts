@@ -5,7 +5,9 @@ export const createItem = async (data: any) => {
 };
 
 export const getAllItems = async () => {
-  return await prisma.itemDefinition.findMany();
+  return await prisma.itemDefinition.findMany({
+    where: { isDeleted: false },
+  });
 };
 
 export const getItemById = async (id: number) => {
