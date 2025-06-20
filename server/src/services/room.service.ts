@@ -64,3 +64,72 @@ export const updateUserInRoom = async (
     data,
   });
 };
+
+export const getRoomMap = async () => {
+  return await prisma.room.findMany({
+    where: {
+      isPublic: true,
+      isDeleted: false,
+    },
+    select: {
+      id: true,
+      name: true,
+      type: true,
+      x: true,
+      y: true,
+      xlen: true,
+      ylen: true,
+    },
+  });
+};
+
+export const getRoomDoors = async (id: number) => {
+  return await prisma.room.findFirst({
+    where: {
+      id: id,
+      isDeleted: false,
+    },
+    select: {
+      id: true,
+      fromDoors: {
+        select: {
+          id: true,
+          x: true,
+          y: true,
+          toRoomId: true,
+          toRoom: {
+            select: {
+              id: true,
+              name: true,
+              type: true,
+            },
+          },
+        },
+      },
+    },
+  });
+};
+
+export const createRoomDoor = async (
+  fromRoomId: number,
+  toRoomId: number,
+  x: number,
+  y: number
+) => {
+  return await prisma.roomDoor.create({
+    data: {
+      x: x,
+      y: y,
+      fromRoomId: fromRoomId,
+      toRoomId: toRoomId,
+    },
+  });
+};
+
+export const deleteRoomDoor = async (doorId: number) => {
+  return await prisma.roomDoor.delete({
+    where: {
+      id: doorId,
+    },
+  });
+};

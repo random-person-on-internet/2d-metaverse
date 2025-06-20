@@ -117,3 +117,57 @@ export const updateUserInRoom = async (req: Request, res: Response) => {
       .json({ error: "Failed to update user state", details: e.message });
   }
 };
+
+export const getRoomMap = async (req: Request, res: Response) => {
+  try {
+    const rooms = await RoomService.getRoomMap();
+
+    res.status(200).json(rooms);
+  } catch (e: any) {
+    res
+      .status(500)
+      .json({ error: "Failed to fetch room map", details: e.message });
+  }
+};
+
+export const getRoomDoors = async (req: Request, res: Response) => {
+  try {
+    const roomId = Number(req.params.id);
+    const doors = await RoomService.getRoomDoors(roomId);
+
+    if (!doors) {
+      res.status(400).json({ message: "No doors available for given room" });
+      return;
+    }
+    res.status(200).json(doors);
+  } catch (e: any) {
+    res
+      .status(500)
+      .json({ error: "Failed to fetch doors", details: e.message });
+  }
+};
+
+export const createRoomDoor = async (req: Request, res: Response) => {
+  try {
+    const { fromRoomId, toRoomId, x, y } = req.body;
+    const door = await RoomService.createRoomDoor(fromRoomId, toRoomId, x, y);
+
+    res.status(200).json(door);
+  } catch (e: any) {
+    res
+      .status(400)
+      .json({ error: "Failed to create door", details: e.message });
+  }
+};
+
+export const deleteRoomDoor = async (req: Request, res: Response) => {
+  try {
+    const doorId = Number(req.params.doorId);
+    await RoomService.deleteRoomDoor(doorId);
+    res.status(200).json({ message: "Door deleted" });
+  } catch (e: any) {
+    res
+      .status(400)
+      .json({ error: "Failed to delete door", details: e.message });
+  }
+};
