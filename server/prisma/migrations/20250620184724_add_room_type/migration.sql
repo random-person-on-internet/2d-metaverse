@@ -1,0 +1,6 @@
+-- CreateEnum
+CREATE TYPE "RoomType" AS ENUM ('GENERIC', 'CAFE', 'SHOP', 'HOME', 'GAMEROOM', 'ARENA', 'MARKET', 'LIBRARY', 'CLUB', 'TOWNHALL', 'HOTSPRING');
+
+-- AlterTable
+ALTER TABLE "Room" ADD COLUMN     "ownerId" INTEGER,
+ADD COLUMN     "type" "RoomType" NOT NULL DEFAULT 'GENERIC';

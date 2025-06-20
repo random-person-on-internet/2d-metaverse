@@ -110,15 +110,19 @@ model Room {
   id          Int          @id @default(autoincrement())
   name        String
   description String?
+  type        RoomType     @default(GENERIC)
   x           Int // coordinates for left top corner
   y           Int
   xlen        Int
   ylen        Int
   isPublic    Boolean      @default(true)
   createdAt   DateTime     @default(now())
+  ownerId     Int?
   isDeleted   Boolean      @default(false)
   // relations
   users       UserInRoom[]
+  fromDoors   RoomDoor[]   @relation("FromRoom")
+  toDoors     RoomDoor[]   @relation("ToRoom")
 }
 
 model UserInRoom {
@@ -140,4 +144,31 @@ model UserInRoom {
 enum Role {
   USER
   ADMIN
+}
+
+enum RoomType {
+  GENERIC
+  CAFE
+  SHOP
+  HOME
+  GAMEROOM
+  ARENA
+  MARKET
+  LIBRARY
+  CLUB
+  TOWNHALL
+  PLAZA
+  HOTSPRING
+}
+
+model RoomDoor {
+  id         Int  @id @default(autoincrement())
+  fromRoom   Room @relation("FromRoom", fields: [fromRoomId], references: [id])
+  fromRoomId Int
+
+  toRoom   Room @relation("ToRoom", fields: [toRoomId], references: [id])
+  toRoomId Int
+
+  x Int
+  y Int
 }
