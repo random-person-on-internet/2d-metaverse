@@ -20,10 +20,15 @@ By the end, the game will have:
 **Step 1: Room system**
 
 ✅ Room model — already done (small improvements)
+
 ✅ Room routes — already done (small improvements)
+
 ⬜ World grid page (frontend) → show list of rooms at (x,y)
+
 ⬜ Add support for room "type" → cafe, shop, minigame, house
+
 ⬜ Players can click room → enter room grid
+
 ⬜ Players can leave room → return to world grid
 
 ---
@@ -31,8 +36,11 @@ By the end, the game will have:
 **Step 2: Player movement**
 
 ⬜ Separate player list per room
+
 ⬜ When in world grid → one player list
+
 ⬜ When in room → different player list
+
 ⬜ Moving across rooms works seamlessly
 
 ---
@@ -40,7 +48,9 @@ By the end, the game will have:
 **Step 3: Items and interaction**
 
 ⬜ Place items inside room (chairs, food, furniture)
+
 ⬜ Players can interact (sit, use, etc.)
+
 ⬜ Add simple chat inside room
 
 ---
@@ -48,7 +58,9 @@ By the end, the game will have:
 **Step 4: Room ownership**
 
 ⬜ Users can own rooms
+
 ⬜ Can lock rooms / set public or private
+
 ⬜ Can decorate room with items
 
 ---
