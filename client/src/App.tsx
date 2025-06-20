@@ -4,6 +4,7 @@ import { useUserStore } from "./stores/userStore";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
+import WorldPage from "./pages/WorldPage";
 
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
   const isLoggedIn = useUserStore((s) => s.isLoggedIn);
@@ -27,7 +28,7 @@ export default function App() {
           path="/worlds"
           element={
             <ProtectedRoute>
-              <div className="text-white p-8">Worlds page</div>{" "}
+              <WorldPage />
             </ProtectedRoute>
           }
         />
