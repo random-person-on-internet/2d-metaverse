@@ -1,5 +1,6 @@
 import { Server, Socket } from "socket.io";
 import { roomUsers } from "../cache/rooms";
+import { connectedPlayers } from "../cache/players";
 
 interface RoomPayload {
   roomId: string;
@@ -15,6 +16,28 @@ export const roomSocketHandler = (io: Server, socket: Socket) => {
       roomUsers.set(roomId, new Set());
     }
     roomUsers.get(roomId)!.add(userId);
+
+    // add to cache
+    connectedPlayers.set(socket.id, {
+      userId,
+      x: 0,
+      y: 0,
+    });
+    // send player list to room
+    io.to(roomId).emit(
+      "player:all",
+      Array.from(connectedPlayers.entries()).map(([id, player]) => ({
+        socketId: id,
+        ...player,
+      }))
+    );
+
+    socket.to(roomId).emit("player:joined", {
+      userId: userId,
+      socketId: socket.id,
+      x: 0,
+      y: 0,
+    });
 
     io.to(roomId).emit("room:joined", {
       userId: userId,

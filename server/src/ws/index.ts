@@ -34,7 +34,7 @@ export const registerSocketHandlers = (io: Server) => {
       }
 
       console.log(
-        `Player ${player?.userId} disconnecte\nSocket disconnected: ${socket.id}`
+        `Player ${player?.userId} disconnected\nSocket disconnected: ${socket.id}`
       );
     });
   });
