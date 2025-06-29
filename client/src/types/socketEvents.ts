@@ -16,6 +16,7 @@ export const SocketListenEvents = {
   ROOM_LEFT: "room:left",
   PLAYER_ALL: "player:all",
   PLAYER_JOINED: "player:joined",
+  PLAYER_LEFT: "player:left",
   PLAYER_MOVED: "player:moved",
   PLAYER_ACTED: "player:acted",
 } as const;

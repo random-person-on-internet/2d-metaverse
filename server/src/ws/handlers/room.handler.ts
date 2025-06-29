@@ -52,6 +52,17 @@ export const roomSocketHandler = (io: Server, socket: Socket) => {
     if (!roomId) return;
     roomUsers.get(roomId)?.delete(userId);
 
+    for (const [id, player] of connectedPlayers.entries()) {
+      if (player.userId === userId) {
+        connectedPlayers.delete(id);
+      }
+    }
+
+    io.to(roomId).emit("player:left", {
+      userId: userId,
+      socketId: socket.id,
+    });
+
     io.to(roomId).emit("room:left", {
       userId,
       socketId: socket.id,

@@ -37,3 +37,8 @@ export interface PlayerActedPayload {
   action: string;
   socketId: string;
 }
+
+export interface PlayerLeftPayload {
+  userId: number;
+  socketId: string;
+}
