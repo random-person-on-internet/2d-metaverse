@@ -4,7 +4,7 @@ import * as RoomService from "../services/room.service";
 
 export const createRoom = async (req: Request, res: Response) => {
   try {
-    const room = await RoomService.createRoom({ data: req.body });
+    const room = await RoomService.createRoom(req.body);
     res.status(201).json(room);
   } catch (e: any) {
     res
