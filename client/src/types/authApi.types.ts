@@ -11,5 +11,5 @@ export interface LoginDTO {
 }
 
 export interface TokenResponse {
-  Token: string;
+  token: string;
 }

@@ -1,3 +1,5 @@
+// This file is no more in use as world is just room id 1
+
 import { create } from "zustand";
 
 export type Room = {

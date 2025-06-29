@@ -20,10 +20,10 @@ export default function SignupPage() {
     setError("");
 
     try {
-      const { Token } = await signup({ email, username, avatar, password });
-      setToken(Token);
+      const { token } = await signup({ email, username, avatar, password });
+      setToken(token);
 
-      const user = await getMe(Token);
+      const user = await getMe(token);
       setUser(user);
 
       navigate("/worlds");

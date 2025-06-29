@@ -18,10 +18,10 @@ export default function LoginPage() {
     setError("");
 
     try {
-      const { Token } = await login({ email, password });
-      setToken(Token);
+      const { token } = await login({ email, password });
+      setToken(token);
 
-      const user = await getMe(Token);
+      const user = await getMe(token);
       setUser(user);
 
       navigate("/worlds");
