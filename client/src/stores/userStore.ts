@@ -35,8 +35,14 @@ export const useUserStore = create<UserStore>((set) => {
     token: null,
     isLoggedIn: false,
     setUser: (user) => set({ user: user, isLoggedIn: true }),
-    setToken: (token) => set({ token }),
-    logout: () => set({ user: null, token: null, isLoggedIn: false }),
+    setToken: (token) => {
+      localStorage.setItem("token", token);
+      set({ token });
+    },
+    logout: () => {
+      localStorage.removeItem("token");
+      set({ user: null, token: null, isLoggedIn: false });
+    },
     setItems: (items) =>
       set((state) => (state.user ? { user: { ...state.user, items } } : {})),
     updateCoins: (amount) =>
