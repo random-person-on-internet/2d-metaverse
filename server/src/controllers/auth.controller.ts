@@ -1,7 +1,11 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import * as AuthService from "../services/auth.service";
 
-export const signup = async (req: Request, res: Response) => {
+export const signup = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   const { email, password, username, avatar } = req.body;
   try {
     const token = await AuthService.signupUser(
@@ -12,17 +16,21 @@ export const signup = async (req: Request, res: Response) => {
     );
     res.status(200).json({ token: token });
   } catch (e: any) {
-    res.status(400).json({ message: "Signup failed", details: e.message });
+    next(e);
   }
 };
 
-export const login = async (req: Request, res: Response) => {
+export const login = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   const { email, password } = req.body;
   try {
     const token = await AuthService.loginUser(email, password);
     res.status(200).json({ token: token });
   } catch (e: any) {
-    res.status(401).json({ message: "Signin failed", details: e.message });
+    next(e);
   }
 };
 
